@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Studios — Acesso Liberado!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400&family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #1a1209;
+    --primary-light: #2e1f10;
+    --background: #faf8f4;
+    --foreground: #f0ebe3;
+    --cream: #e8e0d5;
+    --text: #1a1209;
+    --text-muted: rgba(26,18,9,0.6);
+    --white: #ffffff;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --border: rgba(26,18,9,0.12);
+    --radius-sm: 4px;
+    --radius-md: 10px;
+    --radius-lg: 20px;
+    --shadow: 0 2px 20px rgba(26,18,9,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Geist', sans-serif; background: var(--background); color: var(--text); -webkit-font-smoothing: antialiased; }
+
+  .header { background: var(--primary); padding: 24px; text-align: center; }
+  .header-logo { font-weight: 800; font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); }
+  .header-logo span { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; font-size: 13px; color: var(--gold); display: block; text-transform: none; margin-top: -2px; }
+
+  .hero-thanks { background: var(--primary); padding: 48px 24px 64px; text-align: center; position: relative; overflow: hidden; }
+  .hero-thanks::before { content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); pointer-events: none; }
+  .confetti { font-size: 40px; margin-bottom: 16px; display: block; }
+  .hero-thanks h1 { font-size: clamp(1.8rem, 7vw, 2.8rem); font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px; }
+  .hero-thanks h1 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; color: var(--gold-light); }
+  .hero-thanks p { font-size: 15px; color: rgba(255,255,255,0.65); max-width: 380px; margin: 0 auto; line-height: 1.6; }
+
+  .section { padding: 48px 24px; }
+  .section-cream { background: var(--foreground); }
+  .section-dark { background: var(--primary); }
+  .section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .section-title { font-size: clamp(1.4rem, 5vw, 1.9rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 8px; }
+  .section-title em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; color: #8a7c6e; }
+  .section-desc { font-size: 14px; line-height: 1.65; color: var(--text-muted); margin-bottom: 28px; }
+
+  .video-wrap { background: var(--primary-light); border-radius: var(--radius-lg); aspect-ratio: 16/9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border: 1px dashed rgba(201,168,76,0.3); max-width: 560px; margin: 0 auto; cursor: pointer; transition: border-color 0.2s; }
+  .video-wrap:hover { border-color: var(--gold); }
+  .play-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; }
+  .play-btn svg { margin-left: 3px; }
+  .video-wrap p { font-size: 13px; color: rgba(255,255,255,0.35); }
+
+  .chat-card-single { background: var(--primary-light); border: 1px solid rgba(201,168,76,0.25); border-radius: var(--radius-lg); padding: 32px 24px; max-width: 480px; margin: 0 auto; text-align: center; }
+  .chat-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+  .chat-card-single h3 { font-size: 20px; font-weight: 800; color: var(--white); letter-spacing: -0.02em; margin-bottom: 8px; }
+  .chat-card-single p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; margin-bottom: 24px; }
+  .btn-chat { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Geist', sans-serif; font-size: 15px; font-weight: 700; padding: 15px 32px; border-radius: var(--radius-sm); border: none; cursor: pointer; text-decoration: none; transition: all 0.2s; background: var(--gold); color: var(--primary); width: 100%; }
+  .btn-chat:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
+
+  .prompts-list { display: flex; flex-direction: column; gap: 16px; max-width: 640px; margin: 0 auto; }
+  .prompt-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow); }
+  .prompt-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: var(--foreground); border-bottom: 1px solid var(--border); gap: 12px; }
+  .prompt-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); display: flex; align-items: center; gap: 6px; }
+  .copy-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--text-muted); background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 5px 12px; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+  .copy-btn:hover { background: var(--cream); color: var(--text); }
+  .copy-btn.copied { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
+  .prompt-body { padding: 16px 18px; }
+  .prompt-text { font-size: 12px; line-height: 1.7; color: var(--text); font-family: monospace; background: var(--background); border-radius: var(--radius-sm); padding: 14px; border: 1px solid var(--border); max-height: 140px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+
+  footer { background: var(--primary); padding: 32px 24px; text-align: center; }
+  .footer-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); margin-bottom: 4px; }
+  .footer-tagline { font-family: 'Fraunces', serif; font-style: italic; font-size: 12px; color: var(--gold); margin-bottom: 16px; }
+  footer p { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  @media (min-width: 768px) { .section { padding: 64px 40px; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-logo">Prompt Studios<span>joalheria com IA</span></div>
+</header>
+
+<section class="hero-thanks">
+  <span class="confetti">🎉</span>
+  <h1>Seu acesso está<br><em>liberado!</em></h1>
+  <p>Bem-vindo ao Prompt Studios. Abaixo você encontra tudo que precisa para começar a gerar fotos profissionais das suas joias agora.</p>
+</section>
+
+<section class="section">
+  <p class="section-label">Passo 1</p>
+  <h2 class="section-title">Assista o tutorial <em>primeiro</em></h2>
+  <p class="section-desc">Em menos de 5 minutos você aprende tudo que precisa para usar o Prompt Studios.</p>
+  <div style="max-width:560px; margin:0 auto; border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:16/9;">
+    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/D7_XEgILaH0" title="COMO GERAR FOTO REALISTA EM IA DO SEU PRODUTO!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display:block; width:100%; height:100%;"></iframe>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <p class="section-label" style="color:var(--gold)">Passo 2</p>
+  <h2 class="section-title" style="color:var(--white)">Acesse o <em style="color:var(--gold-light)">Prompt Studios</em></h2>
+  <p class="section-desc" style="color:rgba(255,255,255,0.55)">Clique abaixo para abrir o GPT especialista em fotos de joias.</p>
+  <div class="chat-card-single">
+    <span class="chat-icon">💎</span>
+    <h3>Gerador de Imagens para Joias</h3>
+    <p>GPT especialista em joalheria. Descreva sua peça e receba o prompt perfeito para gerar fotos profissionais.</p>
+    <a href="https://chatgpt.com/g/g-69bf00016f5481919eb9f951e89a1cb5-gerador-de-imagens-para-joias" target="_blank" class="btn-chat">
+      Acessar o Chat
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M8 3.5L11.5 7 8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<section class="section section-cream">
+  <p class="section-label">Passo 3</p>
+  <h2 class="section-title">Prompts prontos para <em>copiar</em></h2>
+  <p class="section-desc">Cole direto no ChatGPT e gere sua foto. Só substituir a joia.</p>
+  <div class="prompts-list">
+
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <span class="prompt-tag">💍 Anel com Modelo</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 8H2a1 1 0 01-1-1V2a1 1 0 011-1h5a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.2"/></svg>
+          Copiar
+        </button>
+      </div>
+      <div class="prompt-body">
+        <p class="prompt-text">Adapte esse prompt para esse anel
+Antes de adaptar me pergunte se eu quero essa mulher, ou outra mulher.
+Me pergunte etnia, cor da pele e cabelo, e aparência.
+
+{"subject":{"identity":"Brazilian female jewelry model","demographics":"Woman, 28 years old, Brazilian, medium tan skin tone, refined and elegant appearance","hair":{"color":"Dark brown","style":"Low sleek bun","texture":"Smooth with natural subtle strands","movement":"Static"},"face":{"shape":"Softly visible, secondary importance","eyes":"Soft gaze, slightly out of focus","skin_details":"Natural texture, realistic skin"},"expression":{"type":"Neutral","mood":"Calm, elegant"}},"clothing":{"top":"Beige minimalist top","style":"Minimalist luxury"},"pose":{"body_position":"Medium close-up with hands raised near chest or face","hands":"Hands positioned in foreground, fingers naturally posed to display ring area","vibe":"Elegant, controlled, product-focused"},"setting":{"environment":"Professional studio","background":"Soft beige gradient background"},"camera":{"shot_type":"Close-up / detail shot","focal_length":"85mm or 100mm macro","aperture":"f/2.8","focus":"Critical focus on fingers"},"lighting":{"source":"Studio softbox with fill light","direction":"Soft directional light emphasizing hand contours"},"technical_details":{"aspect_ratio":"4:5","resolution":"Ultra high resolution (8K detail)","render_quality":"Photorealistic rendering"}}</p>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <span class="prompt-tag">✨ Brinco com Modelo</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 8H2a1 1 0 01-1-1V2a1 1 0 011-1h5a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.2"/></svg>
+          Copiar
+        </button>
+      </div>
+      <div class="prompt-body">
+        <p class="prompt-text">Adapte esse prompt para esse brinco
+Antes de adaptar me pergunte se eu quero essa mulher, ou outra mulher.
+Me pergunte etnia, cor da pele e cabelo, e aparência.
+
+{"subject":{"identity":"Brazilian female jewelry model","demographics":"Woman, 28 years old, Brazilian, medium tan skin tone, refined and elegant appearance","hair":{"color":"Dark brown","style":"Hair fully pulled back into a clean low bun","texture":"Smooth with natural subtle strands","movement":"Static, tightly controlled to fully expose ears"},"face":{"shape":"Oval with defined jawline","eyes":"Dark brown, soft gaze, natural lashes","lips":"Full, natural nude tone, softly closed","skin_details":"Visible pores, natural skin texture, subtle shine on cheekbones and nose"},"expression":{"type":"Neutral refined expression","mood":"Elegant, calm, luxurious"}},"clothing":{"top":"Beige minimalist top with clean neckline","style":"Minimalist, luxury jewelry-focused styling"},"pose":{"body_position":"Medium close-up framing, upper torso slightly angled","head_position":"Head turned slightly to side (3/4 profile) exposing ear","vibe":"Controlled, editorial jewelry campaign"},"setting":{"environment":"Professional studio","background":"Soft beige gradient background"},"camera":{"shot_type":"Close-up portrait","focal_length":"85mm","aperture":"f/2.0","focus":"Critical sharp focus on ear area"},"lighting":{"source":"Studio softbox with subtle fill","direction":"Side lighting highlighting ear contours"},"technical_details":{"aspect_ratio":"4:5","resolution":"Ultra high resolution (8K detail)","render_quality":"Photorealistic, physically accurate rendering"}}</p>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <span class="prompt-tag">📿 Colar com Modelo</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 8H2a1 1 0 01-1-1V2a1 1 0 011-1h5a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.2"/></svg>
+          Copiar
+        </button>
+      </div>
+      <div class="prompt-body">
+        <p class="prompt-text">Adapte esse prompt para esse colar
+Antes de adaptar me pergunte se eu quero essa mulher, ou outra mulher.
+Me pergunte etnia, cor da pele e cabelo, e aparência.
+
+{"subject":{"identity":"Brazilian female jewelry model","demographics":"Woman, 28 years old, Brazilian, medium tan skin tone, refined and elegant appearance","hair":{"color":"Dark brown","style":"Low sleek bun","texture":"Smooth with natural subtle strands","movement":"Static, controlled with minimal loose strands"},"face":{"shape":"Oval with defined jawline","eyes":"Dark brown, soft gaze, natural lashes","lips":"Full, natural nude tone, softly closed","skin_details":"Visible pores, natural skin texture, subtle shine on cheekbones and nose"},"expression":{"type":"Neutral refined expression","mood":"Elegant, calm, luxurious"}},"clothing":{"top":"Beige thin strap top with open neckline","style":"Minimalist, luxury jewelry-focused styling"},"pose":{"body_position":"Medium close-up framing (waist/chest up), torso facing slightly angled","head_position":"Slight tilt to the side","hands":"One hand gently interacting with the necklace area","vibe":"Natural, controlled, premium jewelry campaign"},"setting":{"environment":"Professional studio","background":"Soft beige gradient background"},"camera":{"shot_type":"Medium close-up","focal_length":"85mm","aperture":"f/2.0","focus":"Critical sharp focus on necklace area"},"lighting":{"source":"Studio softbox with secondary fill light","direction":"Main light from side (Rembrandt style) with subtle front fill"},"technical_details":{"aspect_ratio":"4:5","resolution":"Ultra high resolution (8K detail)","render_quality":"Photorealistic, physically accurate rendering"}}</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p class="footer-logo">Prompt Studios</p>
+  <p class="footer-tagline">joalheria com IA</p>
+  <p>© 2026 Prompt Studios. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+  function copyPrompt(btn) {
+    const text = btn.closest('.prompt-card').querySelector('.prompt-text').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Copiado!`;
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 8H2a1 1 0 01-1-1V2a1 1 0 011-1h5a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.2"/></svg> Copiar`;
+      }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
